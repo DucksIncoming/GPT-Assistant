@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>GPT Assistant</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="popup.css">
+    </head>
+    <body>
+        <div class="header">
+            <img src="icons/icon_128px.png" class="icon">
+            <p class="title">GPT Assistant</p>
+            <p class="author">By DucksIncoming</p>
+        </div>
+
+        <div class="main-body">
+            <div class="comment-block">
+                <img src="icons/icon_128px.png">
+                <p>This is some example text that chatGPT could generate, just for an example. As an example. You know.</p>
+            </div>
+            <div class="comment-block">
+                <img src="icons/icon_128px.png">
+                <p>This is some example text that chatGPT could generate, just for an example. As an example. You know.</p>
+            </div>
+            <div class="comment-block">
+                <img src="icons/icon_128px.png">
+                <p>This is some example text that chatGPT could generate, just for an example. As an example. You know.</p>
+            </div>
+            <input class="chat-input" value="Write something for ChatGPT..."></input>
+            <div class="chat-send-wrapper">
+                <input type="image" src="icons/icon_send.png" class="chat-send-button"></input>
+            </div>
+        </div>
+        
+        <script src="gpt-assistant.js" type="module"></script>
+        <script src="background.js" type="module"></script>
+    </body>
+</html>
