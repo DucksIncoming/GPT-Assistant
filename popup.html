@@ -14,27 +14,11 @@
             <p class="author">By DucksIncoming</p>
         </div>
 
-        <div class="main-body">
-            <div class="comment-block" data-author="user">
-                <img src="icons/icon_128px.png">
-                <p>This is some example text that chatGPT could generate, just for an example. As an example. You know.</p>
-            </div>
-            <div class="comment-block" data-author="gpt">
-                <img src="icons/icon_128px.png">
-                <p>This is some example text that chatGPT could generate, just for an example. As an example. You know.</p>
-            </div>
-            <div class="comment-block" data-author="user">
-                <img src="icons/icon_128px.png">
-                <p>This is some example text that chatGPT could generate, just for an example. As an example. You know.</p>
-            </div>
-            <div class="comment-block" data-author="gpt">
-                <img src="icons/icon_128px.png">
-                <p>This is some example text that chatGPT could generate, just for an example. As an example. You know.</p>
-            </div>
-            <input class="chat-input" value="Write something for ChatGPT..."></input>
-            <div class="chat-send-wrapper">
-                <input type="image" src="icons/icon_send.png" class="chat-send-button"></input>
-            </div>
+        <div class="main-body" id="msg-container">
+        </div>
+        <input class="chat-input" id="chat-input" value="Write something for ChatGPT..."></input>
+        <div class="chat-send-wrapper" id="chat-send-button">
+            <img src="icons/icon_send.png" class="chat-send-img"></input>
         </div>
         
         <script src="gpt-assistant.js" type="module"></script>
