@@ -70,11 +70,17 @@ body {
     height: 30px;
     border: 0;
     outline: none;
-    background-color: #8caab0;
+    background-color: #93C6B5;
+    color: black;
     padding: 5px;
-    padding-left: 10px;
+    padding-left: 20px;
     padding-right: 10px;
     border-radius: 10px;
+    opacity: 0.6;
+}
+
+.chat-input:focus {
+    opacity: 0.8;
 }
 
 .chat-send-wrapper {
@@ -85,13 +91,19 @@ body {
     bottom: 10px;
     background-color:rgb(168, 168, 168);
     border-radius: 10px;
+    opacity: 0.5;
+}
+
+.chat-send-wrapper:hover {
+    opacity: 1;
 }
 
 .chat-send-button {
     width: 20px;
     height: 20px;
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     
 }
