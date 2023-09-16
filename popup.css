@@ -120,3 +120,65 @@ body {
 .user-comment {
     background-color: white;
 }
+
+.gpt-thinking-block {
+    width: calc(100% - 60px);
+    min-height: 40px;
+    background-color: white;
+    padding-left: 10px;
+    margin-bottom: 5px;
+    position: relative;
+    padding: 10px;
+    display: flex;
+    padding-left: 60px;
+}
+
+.gpt-thinking-block-icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    width: 30px;
+    animation-name: thinkerFadeIn;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+}
+
+.gpt-thinker {
+    position: relative;
+    margin-right: 5px;
+    width: 5px;
+    height: 5px;
+    margin-top: 5px;
+    opacity: 0.6;
+    animation-name: thinker-bounce;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes thinker-bounce {
+    0% {
+        margin-top: 20px;
+    }
+    50% {
+        margin-top: 15px;
+    }
+    100% {
+        margin-top: 20px;
+    }
+}
+
+@keyframes thinkerFadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.gpt-thinking-block p {
+    font-size: 2ch;
+    margin-left: 50px;
+}

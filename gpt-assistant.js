@@ -4,8 +4,6 @@ Developed by DucksIncoming
 MIT License, 2023
 */
 
-import OpenAI from 'openai';
-
 //Event Listeners
 document.getElementById("chat-input").addEventListener("focus", inputBoxFocus);
 document.getElementById("chat-input").addEventListener("focusout", inputBoxUnfocus);
@@ -14,43 +12,50 @@ document.getElementById("chat-send-button").addEventListener("click", sendMessag
 //Global Variables
 var canMessage = true;
 var appApiKey = "";
+var apiKey = localStorage["apiKey"];
+localStorage["chatMemory"] = JSON.stringify([["test1", 0], ["test2", 1], ["test3", 0], ["test4", 1]]);
+var memory = JSON.parse(localStorage["chatMemory"]);
 
-chrome.storage.local.get(["apiKey"]).then((result) => {
-  appApiKey = result;
-});
-
-const openai = new OpenAI({
-  apiKey: appApiKey,
-});
-
-async function requestGPTResponse(msg) {
-  try {
-    const completion = await openai.chat.completions.create({
-      messages: [{ role: 'user', content: msg }],
-      model: 'gpt-3.5-turbo',
-    });
-  
-    addCommentBlock(completion.choices[0], 1);
-  }
-  catch (e) {
-    prompt("Notice: This service requires access to an OpenAI API Key. You can find the process for registering one at https://help.openai.com/en/articles/4936850-where-do-i-find-my-secret-api-key. Please input your API key if you already have it.")
+if (memory != undefined){
+  for (let i = 0; i < memory.length; i++){
+    addCommentBlock(memory[i][0], memory[i][1]);
   }
 }
+else {
+  localStorage["chatMemory"] = [];
+  memory = [];
+}
 
-main();
+async function requestGPTResponse() {
+  response = openai.ChatCompletion.create();
+}
 
-addCommentBlock("This is a test!", 0);
-addCommentBlock("This is also a test!", 1);
-
-function sendMessage() {
+async function sendMessage() {
   let inputBox = document.getElementById("chat-input");
   let message = inputBox.value;
   
   if (canMessage && message != "Write something for ChatGPT..." && message != ""){
     addCommentBlock(message, 0);
     inputBox.value = "Write something for ChatGPT...";
-    requestGPTResponse(message);
+    toggleGPTThinker(1);
+
+    if (isMessageValid(message)){
+      memory.push([message, 0]);
+      if (memory.length > 10){
+        memory.splice(0,1);
+      }
+      localStorage["chatMemory"] = JSON.Stringify(memory);
+
+      requestGPTResponse();
+    }
+    else {
+      addCommentBlock("Sorry, the prompt you entered didn't work for some reason. Please try again or use a different prompt.", 1);
+    }
   }
+}
+
+function isMessageValid(msg) {
+  return true;
 }
 
 function addCommentBlock(msg, userId) { //userId = 0 for user, 1 for gpt
@@ -62,7 +67,24 @@ function addCommentBlock(msg, userId) { //userId = 0 for user, 1 for gpt
   commentHTML = commentHTML.replace("[RESPONSE]", msg);
 
   document.getElementById("msg-container").innerHTML += commentHTML;
-} 
+}
+
+function toggleGPTThinker(state=null){
+  let thinkerHTML = '<div class="gpt-thinking-block"><img class="gpt-thinking-block-icon" src="icons/icon_gpt.png"><img class="gpt-thinker" style="animation-delay: 0s" src="icons/icon_thinker.png"><img class="gpt-thinker" style="animation-delay: 0.1s" src="icons/icon_thinker.png"><img class="gpt-thinker"  style="animation-delay: 0.2s" src="icons/icon_thinker.png"></div>'
+
+  if (state == null || state == 0){
+    try {
+      document.getElementById("gpt-thinker").remove();
+      canMessage = true;
+      return;
+    }
+    catch (e){
+    }
+  }
+
+  canMessage = false;
+  document.getElementById("msg-container").innerHTML += thinkerHTML;
+}
 
 function inputBoxFocus() {
   let inputBox = document.getElementById("chat-input");
