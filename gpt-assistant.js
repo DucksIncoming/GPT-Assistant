@@ -5,10 +5,15 @@ MIT License, 2023
 */
 
 //Event Listeners
-document.getElementById("chat-input").addEventListener("focus", inputBoxFocus);
-document.getElementById("chat-input").addEventListener("focusout", inputBoxUnfocus);
-document.getElementById("chat-send-button").addEventListener("click", sendMessage)
-document.getElementById("apikey-submit").addEventListener("click", submitAPIKey)
+try {
+  document.getElementById("chat-input").addEventListener("focus", inputBoxFocus);
+  document.getElementById("chat-input").addEventListener("focusout", inputBoxUnfocus);
+  document.getElementById("chat-send-button").addEventListener("click", sendMessage)
+  document.getElementById("apikey-submit").addEventListener("click", submitAPIKey)
+}
+catch (e) {
+
+}
 
 //Global Variables
 var canMessage = true;
@@ -30,7 +35,21 @@ else {
 async function requestGPTResponse() {
   const response = await promptGPTResponse();
   const gptResponse = await response.json();
-  addCommentBlock(gptResponse);
+  toggleGPTThinker(0);
+
+  if (gptResponse["error"]){
+    apiFailure();
+    addCommentBlock("Please input a valid API Key!");
+  }
+  else {
+    let response = JSON.stringify(gptResponse['choices'][0]['message']['content']);
+    response = response.substring(1, response.length-1);
+    addCommentBlock(response, 1);
+    document.getElementById("msg-container").scrollTop = document.getElementById("msg-container").scrollHeight;
+    memory.push([response, 1])
+    localStorage["chatMemory"] = JSON.stringify(memory);
+  }
+  
 }
 
 async function sendMessage() {
@@ -74,7 +93,7 @@ function addCommentBlock(msg, userId) { //userId = 0 for user, 1 for gpt
   commentHTML = commentHTML.replaceAll("[AUTHOR]", author[userId]);
   commentHTML = commentHTML.replace("[ICON]", author[userId]);
   commentHTML = commentHTML.replace("[RESPONSE]", msg);
-
+ 
   document.getElementById("msg-container").innerHTML += commentHTML;
 }
 
@@ -83,7 +102,7 @@ function toggleGPTThinker(state=null){
 
   if (state == null || state == 0){
     try {
-      document.getElementById("gpt-thinker").remove();
+      document.getElementById("gpt-thinking-block").remove();
       canMessage = true;
       return;
     }
@@ -111,7 +130,7 @@ function inputBoxUnfocus() {
 }
 
 function submitAPIKey(){
-  let key = document.getElementById("apikey-input");
+  let key = document.getElementById("apikey-dialog-input");
   localStorage["apiKey"] = key.value;
   apiKey = key.value;
 
@@ -137,7 +156,7 @@ async function promptGPTResponse() {
     messageHistory.push({ role: role, content: memory[i][0] });
   }
   
-  fetch(url, {
+  const gptResponse = await fetch(url, {
       method: 'POST',
       headers: {
           'Authorization': bearer,
@@ -148,5 +167,7 @@ async function promptGPTResponse() {
         max_tokens: 2048,
         temperature: 0.7,
         messages: messageHistory,
-      })}).then(response => {return response});
+      })});
+
+    return gptResponse;
 }

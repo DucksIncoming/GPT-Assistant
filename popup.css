@@ -4,9 +4,8 @@ body {
     background-color: white;
     color: black;
     font-family: "Roboto";
-    width: 500px;
-    height: 450px;
-    overflow: hidden;
+    min-width: 500px;
+    min-height: 450px;
 }
 
 .title {
