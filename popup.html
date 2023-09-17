@@ -16,10 +16,19 @@
 
         <div class="main-body" id="msg-container">
         </div>
-        <input class="chat-input" id="chat-input" value="Write something for ChatGPT..."></input>
+        <input class="chat-input" id="chat-input" value="Write something for ChatGPT..." />
         <div class="chat-send-wrapper" id="chat-send-button">
-            <img src="icons/icon_send.png" class="chat-send-img"></input>
+            <img src="icons/icon_send.png" class="chat-send-img">
         </div>
+
+        <div class="page-blur" id="page-blur"></div>
+        <dialog class="apikey-dialog" id="apikey-dialog">
+            <p class="apikey-dialog-title">Hold up...</p>
+            <p class="apikey-dialog-description">This service requires access to an <b>OpenAI API key</b>. Please navigate to <a href="https://platform.openai.com/account/api-keys" target="_blank" class="apikey-link">https://platform.openai.com/account/api-keys</a> for more information.</p>
+            <p class="apikey-dialog-description">If you have your API key, please enter it below. It will be stored in your browser's local storage.</p>
+            <input class="apikey-dialog-input" />
+            <input type="image" class="apikey-checkmark" src="icons/icon_checkmark.png" id="apikey-submit" />
+        </dialog>
         
         <script src="gpt-assistant.js" type="module"></script>
         <script src="background.js" type="module"></script>

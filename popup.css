@@ -6,6 +6,7 @@ body {
     font-family: "Roboto";
     width: 500px;
     height: 450px;
+    overflow: hidden;
 }
 
 .title {
@@ -122,7 +123,7 @@ body {
 }
 
 .gpt-thinking-block {
-    width: calc(100% - 60px);
+    width: calc(100% - 100px);
     min-height: 40px;
     background-color: white;
     padding-left: 10px;
@@ -148,8 +149,8 @@ body {
 .gpt-thinker {
     position: relative;
     margin-right: 5px;
-    width: 5px;
-    height: 5px;
+    width: 3px;
+    height: 3px;
     margin-top: 5px;
     opacity: 0.6;
     animation-name: thinker-bounce;
@@ -181,4 +182,77 @@ body {
 .gpt-thinking-block p {
     font-size: 2ch;
     margin-left: 50px;
+}
+
+.page-blur {
+    width: 500px;
+    height: 450px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    backdrop-filter: blur(1px);
+    display: none;
+}
+
+.apikey-dialog {
+    width: 300px;
+    height: 200px;
+    position: absolute;
+    top: 50%;
+    left: calc(50% - 20px);
+    transform: translate(-50%, -50%);
+    outline: none;
+    border: 0;
+    background-color: #7fffd4;
+    padding-left: 10px;
+    border-radius: 10px;
+    filter: drop-shadow(0px 0px 10px black);
+}
+
+.apikey-dialog-title {
+    color: black;
+    font-weight: 600;
+    font-size: 24px;
+    margin: 0;
+    margin-left: 50%;
+    margin-top: 10px;
+    text-align: center;
+    transform: translateX(-50%);
+}
+
+.apikey-dialog-description {
+    font-size: 14px;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.apikey-dialog-input {
+    width: 200px;
+    height: 25px;
+    position: absolute;
+    bottom: 10px;
+    left: 40px;
+    outline: none;
+    border: 1px solid black;
+}
+
+.apikey-link {
+    color:rgb(0, 108, 90);
+}
+
+.apikey-link:visited {
+    color:rgb(62, 0, 55);
+}
+
+.apikey-checkmark {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    right: 40px;
+    bottom: 12px;
+    opacity: 0.8;
+}
+
+.apikey-checkmark:hover {
+    opacity: 1;
 }

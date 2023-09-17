@@ -1,0 +1,16 @@
+{
+  "name": "gpt-server",
+  "version": "1.0.0",
+  "description": "Backend for the GPTAssistant Chrome Plugin",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"who needs tests nerd\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "DucksIncoming",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "openai": "^4.7.1"
+  }
+}
