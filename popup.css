@@ -59,6 +59,7 @@ body {
 .comment-block p {
     font-size: 2ch;
     margin-left: 50px;
+    white-space: pre-wrap;
 }
 
 .main-body {
@@ -253,5 +254,19 @@ body {
 }
 
 .apikey-checkmark:hover {
+    opacity: 1;
+}
+
+.memory-refresh {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: calc(50% + 2.5px);
+    right: 20px;
+    transform: translateY(-50%);
+    opacity: 0.5;
+}
+
+.memory-refresh:hover {
     opacity: 1;
 }

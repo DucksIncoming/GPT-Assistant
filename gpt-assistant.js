@@ -5,15 +5,17 @@ MIT License, 2023
 */
 
 //Event Listeners
-try {
+document.addEventListener('DOMContentLoaded', function () {
   document.getElementById("chat-input").addEventListener("focus", inputBoxFocus);
   document.getElementById("chat-input").addEventListener("focusout", inputBoxUnfocus);
   document.getElementById("chat-send-button").addEventListener("click", sendMessage)
-  document.getElementById("apikey-submit").addEventListener("click", submitAPIKey)
-}
-catch (e) {
+  document.getElementById("apikey-submit").addEventListener("click", submitAPIKey);
+  document.getElementById("memory-refresh").addEventListener("click", refreshMemory);
 
-}
+  setTimeout(function() {
+    document.getElementById("msg-container").scrollTop = document.getElementById("msg-container").scrollHeight;
+  }, 100);
+}, false);
 
 //Global Variables
 var canMessage = true;
@@ -28,8 +30,7 @@ if (memory != undefined){
   }
 }
 else {
-  localStorage["chatMemory"] = JSON.stringify([]);
-  memory = [];
+  refreshMemory()
 }
 
 async function requestGPTResponse() {
@@ -43,6 +44,7 @@ async function requestGPTResponse() {
   }
   else {
     let response = JSON.stringify(gptResponse['choices'][0]['message']['content']);
+    
     response = response.substring(1, response.length-1);
     addCommentBlock(response, 1);
     document.getElementById("msg-container").scrollTop = document.getElementById("msg-container").scrollHeight;
@@ -61,8 +63,7 @@ async function sendMessage() {
     inputBox.value = "Write something for ChatGPT...";
 
     if (message == "clear"){
-      localStorage["chatMemory"] = JSON.stringify([]);
-      memory = [];
+      refreshMemory()
       return;
     }
 
@@ -92,6 +93,7 @@ function addCommentBlock(msg, userId) { //userId = 0 for user, 1 for gpt
   let commentHTML = '<div class="comment-block [AUTHOR]-comment" data-author="[AUTHOR]"><img src="icons/icon_[AUTHOR].png"><p>[RESPONSE]</p></div>';
   commentHTML = commentHTML.replaceAll("[AUTHOR]", author[userId]);
   commentHTML = commentHTML.replace("[ICON]", author[userId]);
+  msg = msg.replaceAll("\\n","<br>");
   commentHTML = commentHTML.replace("[RESPONSE]", msg);
  
   document.getElementById("msg-container").innerHTML += commentHTML;
@@ -170,4 +172,14 @@ async function promptGPTResponse() {
       })});
 
     return gptResponse;
+}
+
+function refreshMemory() {
+  memory = [];
+  localStorage["chatMemory"] = JSON.stringify([]);
+
+  let chats = document.querySelectorAll(".comment-block");
+  for (let i = 0; i < chats.length; i++) {
+    chats[i].remove();
+  }
 }
